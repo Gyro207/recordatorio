@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Para ti</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #0a0a0a;
+            min-height: 100vh;
+            overflow-x: hidden;
+            color: white;
+        }
+
+        .stars {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .star {
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            background: white;
+            border-radius: 50%;
+            animation: twinkle 3s infinite;
+        }
+
+        @keyframes twinkle {
+            0%, 100% {
+                opacity: 0.3;
+            }
+            50% {
+                opacity: 1;
+            }
+        }
+
+        .container {
+            position: relative;
+            z-index: 10;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 40px 20px;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .intro-screen {
+            text-align: center;
+            animation: fadeIn 2s ease-out;
+        }
+
+        .intro-screen h1 {
+            font-size: 48px;
+            background: linear-gradient(45deg, #ff6b9d, #c06bff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 20px;
+        }
+
+        .intro-screen p {
+            font-size: 22px;
+            color: #ccc;
+            margin-bottom: 40px;
+        }
+
+        .start-button {
+            background: linear-gradient(45deg, #ff6b9d, #c06bff);
+            border: none;
+            padding: 18px 50px;
+            font-size: 20px;
+            border-radius: 50px;
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 30px rgba(255, 107, 157, 0.4);
+            font-weight: 600;
+        }
+
+        .start-button:active {
+            transform: translateY(-2px);
+        }
+
+        .content-screen {
+            display: none;
+            animation: fadeIn 1.5s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .section {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border-radius: 30px;
+            padding: 50px 40px;
+            margin-bottom: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .section::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255, 107, 157, 0.1) 0%, transparent 70%);
+            animation: rotate 20s linear infinite;
+        }
+
+        @keyframes rotate {
+            from {
+                transform: rotate(0deg);
+            }
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        .section-title {
+            font-size: 32px;
+            background: linear-gradient(45deg, #ff6b9d, #ffd93d);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 20px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .section-content {
+            font-size: 18px;
+            line-height: 1.8;
+            color: #e0e0e0;
+            position: relative;
+            z-index: 1;
+        }
+
+        .heart-big {
+            text-align: center;
+            font-size: 100px;
+            margin: 40px 0;
+            animation: heartbeat 1.5s ease-in-out infinite;
+        }
+
+        @keyframes heartbeat {
+            0%, 100% {
+                transform: scale(1);
+            }
+            25% {
+                transform: scale(1.15);
+            }
+            50% {
+                transform: scale(1);
+            }
+        }
+
+        .final-message {
+            text-align: center;
+            font-size: 24px;
+            line-height: 1.8;
+            color: #f0f0f0;
+            margin: 40px 0;
+            font-style: italic;
+            position: relative;
+            z-index: 1;
+        }
+
+        .signature {
+            text-align: right;
+            font-size: 28px;
+            background: linear-gradient(45deg, #ff6b9d, #ffd93d);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-top: 40px;
+            font-weight: 600;
+            position: relative;
+            z-index: 1;
+        }
+
+        .date {
+            text-align: center;
+            color: #888;
+            font-size: 14px;
+            margin-top: 50px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .floating-hearts {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 5;
+        }
+
+        .floating-heart {
+            position: absolute;
+            font-size: 25px;
+            opacity: 0;
+            animation: float 8s ease-in infinite;
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(100vh) rotate(0deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 0.7;
+            }
+            90% {
+                opacity: 0.7;
+            }
+            100% {
+                transform: translateY(-150px) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .intro-screen h1 {
+                font-size: 36px;
+            }
+            .section {
+                padding: 30px 25px;
+            }
+            .section-title {
+                font-size: 26px;
+            }
+            .final-message {
+                font-size: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="stars" id="stars"></div>
+    <div class="floating-hearts" id="hearts"></div>
+
+    <div class="container">
+        <div class="intro-screen" id="intro">
+            <h1>✨ Algo especial para ti ✨</h1>
+            <p>Preparé esto con mucho cariño...</p>
+            <button class="start-button" onclick="startExperience()">Abrir 💕</button>
+        </div>
+
+        <div class="content-screen" id="content">
+            <div class="section">
+                <h2 class="section-title">Pensando en ti</h2>
+                <div class="section-content">
+                    Sé que la vida nos mantiene ocupados, que los días pasan volando entre trabajo, responsabilidades y mil cosas más. Pero quiero que sepas algo importante: en medio de todo ese caos, siempre hay un espacio en mi mente reservado para ti.
+                    <br><br>
+                    No importa cuán ocupado esté, nunca te olvido. Eres mi pensamiento favorito en medio de un día difícil.
+                </div>
+            </div>
+
+            <div class="heart-big">💖</div>
+
+            <div class="section">
+                <h2 class="section-title">Solo quería que sepas...</h2>
+                <div class="final-message">
+                    Que aunque a veces esté ocupado,<br>
+                    siempre encuentro un momento para pensar en ti.
+                    <br><br>
+                    Eres esa persona que hace que incluso<br>
+                    los días complicados valgan la pena.
+                    <br><br>
+                    Gracias por estar y por tu paciencia. 💫
+                </div>
+                <div class="signature">Pensando en ti ❤️</div>
+            </div>
+
+            <div class="date" id="dateDisplay"></div>
+        </div>
+    </div>
+
+    <script>
+        function startExperience() {
+            document.getElementById('intro').style.display = 'none';
+            document.getElementById('content').style.display = 'block';
+            for (var i = 0; i < 8; i++) {
+                setTimeout(createHeart, i * 150);
+            }
+        }
+
+        function createHeart() {
+            var heart = document.createElement('div');
+            heart.className = 'floating-heart';
+            var hearts = ['❤️', '💕', '💖', '💗', '💓'];
+            heart.textContent = hearts[Math.floor(Math.random() * hearts.length)];
+            heart.style.left = Math.random() * 100 + '%';
+            heart.style.animationDelay = Math.random() * 2 + 's';
+            heart.style.animationDuration = (Math.random() * 4 + 6) + 's';
+            document.getElementById('hearts').appendChild(heart);
+            setTimeout(function() {
+                if (heart.parentNode) {
+                    heart.parentNode.removeChild(heart);
+                }
+            }, 10000);
+        }
+
+        var starsContainer = document.getElementById('stars');
+        for (var i = 0; i < 150; i++) {
+            var star = document.createElement('div');
+            star.className = 'star';
+            star.style.left = Math.random() * 100 + '%';
+            star.style.top = Math.random() * 100 + '%';
+            star.style.animationDelay = Math.random() * 3 + 's';
+            starsContainer.appendChild(star);
+        }
+
+        setInterval(createHeart, 1200);
+
+        var months = ['enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio', 'julio', 'agosto', 'septiembre', 'octubre', 'noviembre', 'diciembre'];
+        var today = new Date();
+        var dateStr = today.getDate() + ' de ' + months[today.getMonth()] + ' de ' + today.getFullYear();
+        document.getElementById('dateDisplay').textContent = dateStr;
+    </script>
+</body>
+</html>
